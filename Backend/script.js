@@ -99,3 +99,4 @@ app.delete("/artists/:id", async (req, res) => {
 
   res.json(artists);
 });
+
