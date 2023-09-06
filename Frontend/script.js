@@ -7,10 +7,18 @@ let selectedArtist;
 function start() {
   console.log("we have connection to js 👌🙌");
 
-  document.querySelector("#btn-create-artist").addEventListener("click", () => document.querySelector("#dialog-create-artist").showModal());
+  document
+    .querySelector("#btn-create-artist")
+    .addEventListener("click", () =>
+      document.querySelector("#dialog-create-artist").showModal()
+    );
 
-  document.querySelector("#form-create").addEventListener("submit", createArtist);
-  document.querySelector("#form-update").addEventListener("submit", submitUpdatedArtist);
+  document
+    .querySelector("#form-create")
+    .addEventListener("submit", createArtist);
+  document
+    .querySelector("#form-update")
+    .addEventListener("submit", submitUpdatedArtist);
 
   updateArtistpage();
   console.log("START FUNC");
@@ -29,7 +37,8 @@ async function getArtistsFromBackend() {
 }
 
 function showArtistsAll(array) {
-  document.querySelector("#artist-table-body").innerHTML = "";
+  // document.querySelector("#artist-table-body").innerHTML = "";
+  document.querySelector(".grid-container").innerHTML = "";
 
   for (const artist of array) {
     showArtist(artist);
@@ -37,31 +46,39 @@ function showArtistsAll(array) {
 }
 
 function showArtist(artist) {
-  const html = /* HTML */ `
-    <tr class="artist-item">
-      <td>
-        <button class="btn-update-artist" class="buttonAni">Update</button>
-        <button class="btn-delete-artist" class="buttonAni">Delete</button>
-      </td>
-      <td>${artist.name}</td>
-      <td>${artist.birthdate}</td>
-      <td>${artist.activeSince}</td>
-      <td>${artist.genres}</td>
-      <td>${artist.labels}</td>
-      <td>${artist.website}</td>
-      <td><img src=${artist.image} /></td>
-      <td>${artist.shortDescription}</td>
-      <td>
-        <input type="checkbox" id="favoriteArtist" name="favoriteArtist" value="true" />
+
+  const html = /* html */ `
+    <article class="grid-item">
+    <button class="btn-update-artist" class="buttonAni">Update</button>
+    <button class="btn-delete-artist" class="buttonAni">Delete</button>
+    </br>
+    <img src="${artist.image}" />
+      <h3>${artist.name}</h3>
+      <p>${artist.birthdate}</p>
+      <p>${artist.activeSince}</p>
+      <p>${artist.genres}</p>
+      <p>${artist.labels}</p>
+      <p>${artist.website}</p>
+      <p>${artist.shortDescription}</p>
+      <input
+          type="checkbox"
+          id="favoriteArtist"
+          name="favoriteArtist"
+          value="true"
+        />
         <label for="favoriteArtist">Favorite</label><br />
-      </td>
-    </tr>
+    </article>
   `;
+  document
+    .querySelector(".grid-container")
+    .insertAdjacentHTML("beforeend", html);
 
-  document.querySelector("#artist-table-body").insertAdjacentHTML("beforeend", html);
-
-  document.querySelector("#artist-table-body tr:last-child .btn-update-artist").addEventListener("click", () => selectedToUpdate(artist));
-  document.querySelector("#artist-table-body tr:last-child .btn-delete-artist").addEventListener("click", () => deleteArtist(artist.id));
+  document
+    .querySelector(".grid-container article:last-child .btn-update-artist")
+    .addEventListener("click", () => selectedToUpdate(artist));
+  document
+    .querySelector(".grid-container article:last-child .btn-delete-artist")
+    .addEventListener("click", () => deleteArtist(artist.id));
 }
 
 async function createArtist(event) {
@@ -76,7 +93,7 @@ async function createArtist(event) {
     labels: form.labels.value,
     website: form.website.value,
     image: form.image.value,
-    shortDescription: form.shortDescription.value
+    shortDescription: form.shortDescription.value,
   };
 
   // JSONify the new artist
@@ -84,7 +101,7 @@ async function createArtist(event) {
   const response = await fetch(`${endpoint}/artists`, {
     method: "POST",
     body: artistAsJson,
-    headers: { "Content-Type": "application/json" }
+    headers: { "Content-Type": "application/json" },
   });
 
   if (response.ok) {
@@ -128,7 +145,7 @@ async function submitUpdatedArtist(event) {
     labels: form.labels.value,
     website: form.website.value,
     image: form.image.value,
-    shortDescription: form.shortDescription.value
+    shortDescription: form.shortDescription.value,
   };
 
   // JSONify the updated artist
@@ -136,7 +153,7 @@ async function submitUpdatedArtist(event) {
   const response = await fetch(`${endpoint}/artists/${selectedArtist.id}`, {
     method: "PUT",
     body: artistAsJson,
-    headers: { "Content-Type": "application/json" }
+    headers: { "Content-Type": "application/json" },
   });
   if (response.ok) {
     updateArtistpage();
@@ -147,7 +164,7 @@ async function submitUpdatedArtist(event) {
 async function deleteArtist(id) {
   console.log(id);
   const response = await fetch(`${endpoint}/artists/${id}`, {
-    method: "DELETE"
+    method: "DELETE",
   });
 
   if (response.ok) {
