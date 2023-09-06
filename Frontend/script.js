@@ -3,6 +3,7 @@
 window.addEventListener("load", start);
 const endpoint = "http://localhost:3000";
 let selectedArtist;
+// let artistData;
 
 function start() {
   console.log("we have connection to js 👌🙌");
@@ -22,6 +23,13 @@ function start() {
 
   updateArtistpage();
   console.log("START FUNC");
+
+  // document.querySelector("#sort").addEventListener("change", sortByX);
+  // document.querySelector("#favoriteArtist").addEventListener("change", favoritArtistChecked)
+
+  // getFavoriteArtists();
+  // findFavoriteArtists();
+  showFavoriteArtists();
 }
 
 async function updateArtistpage() {
@@ -33,6 +41,7 @@ async function getArtistsFromBackend() {
   const response = await fetch(`${endpoint}/artists`);
   const data = await response.json();
   console.log(data);
+  // artistData = data;
   return data;
 }
 
@@ -46,39 +55,71 @@ function showArtistsAll(array) {
 }
 
 function showArtist(artist) {
-
   const html = /* html */ `
     <article class="grid-item">
-    <button class="btn-update-artist" class="buttonAni">Update</button>
-    <button class="btn-delete-artist" class="buttonAni">Delete</button>
+    <div class="btns">
+        <button class="btnShowArtistModal">Show more info</button>
+        
+      </div>
     </br>
     <img src="${artist.image}" />
       <h3>${artist.name}</h3>
-      <p>${artist.birthdate}</p>
-      <p>${artist.activeSince}</p>
-      <p>${artist.genres}</p>
-      <p>${artist.labels}</p>
-      <p>${artist.website}</p>
-      <p>${artist.shortDescription}</p>
-      <input
-          type="checkbox"
-          id="favoriteArtist"
-          name="favoriteArtist"
-          value="true"
-        />
-        <label for="favoriteArtist">Favorite</label><br />
+      <p>Genre: ${artist.genres}</p>
     </article>
   `;
   document
     .querySelector(".grid-container")
     .insertAdjacentHTML("beforeend", html);
 
+  // document
+  //   .querySelector(".grid-container article:last-child .btn-update-artist")
+  //   .addEventListener("click", () => selectedToUpdate(artist));
+  // document
+  //   .querySelector(".grid-container article:last-child .btn-delete-artist")
+  //   .addEventListener("click", () => deleteArtist(artist.id));
+
   document
-    .querySelector(".grid-container article:last-child .btn-update-artist")
+    .querySelector(".grid-container article:last-child")
+    .addEventListener("click", () => showArtistModal(artist));
+}
+
+function showArtistModal(artist) {
+  console.log(artist);
+  const html = /* html */ `
+    <article class="grid-item">
+    <button class="btn-update-artist">Update</button>
+    <button class="btn-delete-artist">Delete</button>
+    <input
+          type="checkbox"
+          id="favoriteArtist"
+          name="favoriteArtist"
+          value="true"
+        />
+        <label for="favoriteArtist">Favorite</label><br />
+    </br>
+    <h3>${artist.name}</h3>
+    <img src="${artist.image}" />
+      <p>Birthdate: ${artist.birthdate}</p>
+      <p>Active Since: ${artist.activeSince}</p>
+      <p>Genres: ${artist.genres}</p>
+      <p>Labels: ${artist.labels}</p>
+      <p>Website: ${artist.website}</p>
+      <p>Short Description: ${artist.shortDescription}</p>
+    </article>
+    `;
+  document.querySelector("#show-artist-modal").innerHTML = html;
+
+  document.querySelector("#show-artist-modal").showModal();
+
+  document
+    .querySelector(".btn-update-artist")
     .addEventListener("click", () => selectedToUpdate(artist));
   document
-    .querySelector(".grid-container article:last-child .btn-delete-artist")
+    .querySelector(".btn-delete-artist")
     .addEventListener("click", () => deleteArtist(artist.id));
+  document
+    .querySelector("#favoriteArtist")
+    .addEventListener("change", () => favoritArtistChecked(artist));
 }
 
 async function createArtist(event) {
@@ -171,4 +212,102 @@ async function deleteArtist(id) {
     updateArtistpage();
     scrollToTop({ behavior: "smooth" });
   }
+}
+
+// async function favoritArtistChecked(artist) {
+//   // console.log(event);
+//   console.log(artist.id);
+//   const artistID = { id: artist.id };
+//   const artistAsJson = JSON.stringify(artistID);
+//   const response = await fetch(`${endpoint}/artists/${artist.id}`, {
+//     method: "POST",
+//     body: artistAsJson,
+//     headers: { "Content-Type": "application/json" },
+//   });
+
+//   if (response.ok) {
+//     console.log("id sent to favoriteArtists.json file");
+//   } else {
+//     console.error("Something went wrong with sending the id");
+//   }
+// }
+
+async function favoritArtistChecked(artist) {
+  const artistID = { id: artist.id }; // Create an object with the artist's ID
+  const artistAsJson = JSON.stringify(artistID);
+
+  const response = await fetch(`${endpoint}/artists/${artist.id}`, {
+    method: "POST",
+    body: artistAsJson,
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (response.ok) {
+    console.log("ID sent to favoriteArtists.json file");
+  } else {
+    console.error("Something went wrong with sending the ID");
+  }
+}
+
+async function getFavoriteArtists() {
+  const response = await fetch(`${endpoint}/favoriteArtists`);
+  const favs = await response.json();
+  console.log(favs);
+  // console.log(artistData);
+  // const artists = await getArtistsFromBackend();
+  // console.log("bbbbbbbbb", artists);
+  return favs;
+}
+// getFavoriteArtists()
+
+async function findFavoriteArtists() {
+  const favArtistIds = await getFavoriteArtists();
+  const allArtists = await getArtistsFromBackend();
+
+  if (favArtistIds.length === 0) {
+    const noFavs = document.getElementById("favoriteArtistList");
+    noFavs.innerHTML = /* html */ `<p>No Favorite Artist Found</p>`;
+  }
+
+  const matchedArtists = allArtists.filter((artist) =>
+    favArtistIds.includes(String(artist.id))
+  );
+
+  console.log(matchedArtists);
+  return matchedArtists;
+}
+
+async function showFavoriteArtists() {
+  const matchedArtists = await findFavoriteArtists();
+  document.querySelector("#favoriteArtistList").innerHTML = "";
+
+  if (matchedArtists.length === 0) {
+    const noFavs = document.getElementById("favoriteArtistList");
+    noFavs.innerHTML = /* html */ `<p>No Favorite Artist Found</p>`;
+  } else {
+    for (const favArtist of matchedArtists) {
+      showFavArtist(favArtist);
+    }
+  }
+}
+
+function showFavArtist(favArtist) {
+  const html = /* html */ `
+    <article class="fav-item">
+    <div class="btns">
+      <button class="btnShowArtistModal">Show more info</button>
+    </div>
+    </br>
+    <img src="${favArtist.image}" />
+      <h3>${favArtist.name}</h3>
+      <p>Genre: ${favArtist.genres}</p>
+    </article>
+  `;
+  document
+    .querySelector("#favoriteArtistList")
+    .insertAdjacentHTML("beforeend", html);
+
+  document
+    .querySelector("#favoriteArtistList article:last-child")
+    .addEventListener("click", () => showArtistModal(artist));
 }

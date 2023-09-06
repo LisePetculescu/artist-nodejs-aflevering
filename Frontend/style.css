@@ -5,25 +5,26 @@ body {
   margin: 0;
 }
 
-.grid-container {
+.grid-container,
+.fav-container {
   display: grid;
   grid-template-columns: 1fr;
   column-gap: 1.2vw;
-  row-gap: 0.6vw;
+  row-gap: 1.2vw;
   margin: 2vw;
   position: relative;
 }
 
 @media (min-width: 400px) {
   .grid-container,
-  .grid-container {
+  .fav-container {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 @media (min-width: 650px) {
   .grid-container,
-  .grid-container {
+  .fav-container {
     grid-template-columns: 1fr 1fr 1fr;
   }
   .modal-item {
@@ -33,7 +34,7 @@ body {
 
 @media (min-width: 992px) {
   .grid-container,
-  .grid-container {
+  .fav-container {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
   .modal-item {
@@ -54,14 +55,23 @@ body {
 header,
 footer {
   text-align: center;
-  background-color: rgb(43, 41, 41);
+  background-color: rgb(32, 31, 31);
+  padding: 10px;
+}
+
+.grid-item {
+  color: rgb(212, 143, 14);
+  background-color: #292727;
+  padding: 15px;
+  /* border-radius: 20px; */
 }
 
 img {
   object-fit: cover;
   width: 20vw;
   height: 20vw;
-  filter: drop-shadow(3px 2px 4px #5e5e5f);
+  /* filter: drop-shadow(3px 2px 4px #5e5e5f); */
+  filter: drop-shadow(3px 2px 4px #111111);
 }
 
 button {
@@ -73,7 +83,6 @@ dialog {
   background-color: rgb(32, 31, 31);
   color: rgb(243, 229, 202);
   color: rgb(221, 161, 39);
-  /* margin: 0; */
 }
 
 input {
@@ -81,4 +90,10 @@ input {
 }
 ::placeholder {
   color: rgb(243, 221, 192);
+}
+
+#catalogue,
+#favArtistHeader {
+  position: relative;
+  left: 2vw;
 }

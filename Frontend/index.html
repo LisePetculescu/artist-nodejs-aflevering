@@ -8,11 +8,21 @@
   </head>
   <body>
     <header>
-      <h1>Some of the generally more known artists of our time</h1>
+      <h1>Some of the Generally More Known Artists of Our Time</h1>
       <h2>hehe</h2>
       <button id="btn-create-artist" class="buttonAni">New Artist</button>
+      <label for="sort">Sort By:</label>
+      <select id="sort" autocomplete="off">
+        <option value="default"></option>
+        <option value="name">Name</option>
+        <option value="age">Age</option>
+      </select>
     </header>
     <main>
+      <section>
+        <h2 id="favArtistHeader" >Favorite Artists</h2>
+        <div id="favoriteArtistList" class="fav-container"></div>
+      </section>
       <section>
         <h2 id="catalogue">Catalogue - Artists</h2>
         <section id="artist-section" class="grid-container"></section>
@@ -87,6 +97,7 @@
         </form>
       </dialog>
     </main>
+    <dialog id="show-artist-modal"></dialog>
     <footer>
       <h3>"I've done did this webapp" - Lise</h3>
       <h4>'Emotionally supported by ChatGPT'</h4>
