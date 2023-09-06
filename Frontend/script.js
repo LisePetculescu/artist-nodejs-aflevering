@@ -234,9 +234,10 @@ async function deleteArtist(id) {
 
 async function favoritArtistChecked(artist) {
   const artistID = { id: artist.id }; // Create an object with the artist's ID
+  console.log("artisk id Front", artistID);
   const artistAsJson = JSON.stringify(artistID);
 
-  const response = await fetch(`${endpoint}/artists/${artist.id}`, {
+  const response = await fetch(`${endpoint}/favoriteArtists`, {
     method: "POST",
     body: artistAsJson,
     headers: { "Content-Type": "application/json" },

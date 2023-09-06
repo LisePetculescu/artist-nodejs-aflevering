@@ -49,7 +49,6 @@ app.get("/favoriteArtists", async (req, res) => {
   }
 });
 
-
 app.post("/artists", async (req, res) => {
   console.log(req.body);
   const newArtist = req.body;
@@ -63,8 +62,10 @@ app.post("/artists", async (req, res) => {
   res.json(artists);
 });
 
-app.post("/artists/:id", async (req, res) => {
-  const id = req.params.id;
+app.post("/favoriteArtists", async (req, res) => {
+  let id = req.body.id;
+  console.log("reg.body.id", id);
+  id = id.toString();
 
   // Read the existing favorite artists list from the file
   const favArtistList = await fs.readFile("favoritArtists.json");
