@@ -11,15 +11,7 @@ app.use(express.json());
 async function getArtists() {
   const artistList = await fs.readFile("artistData.json");
   return JSON.parse(artistList);
-  // console.log(artists);
-
-  // return artists;
 }
-
-// async function makeNewArtist(artists) {
-//   const json = JSON.stringify(artists);
-//   await fs.writeFile("artistData.json", json);
-// }
 
 app.listen(port, () => {
   console.log(`noget sjovt skete... server kører på http://localhost:${port}`);
@@ -31,21 +23,13 @@ app.get("/", (req, res) => {
 
 app.get("/artists", async (req, res) => {
   const artists = await getArtists();
-  //   res.send("vi får artister! 🎉");
-  //   const artistList = await fs.readFile("artistData.json");
-  //   const artists = JSON.parse(artistList);
   getArtists(artists);
   res.json(artists);
-  // console.log(artists);
 });
 
 app.get("/artists/:id", async (req, res) => {
-  // getArtists(artists);
   const artists = await getArtists();
   console.log(req.params);
-
-  //   const artistList = await fs.readFile("artistData.json");
-  //   const artists = JSON.parse(artistList);
 
   const id = Number(req.params.id);
   const findArtist = artists.find((artist) => artist.id === id);
@@ -71,9 +55,10 @@ app.put("/artists/:id", async (req, res) => {
   console.log(id);
 
   const artists = await getArtists();
-  // const artists = JSON.parse(data);
 
-  const artistToUpdate = artists.find((artist) => Number(artist.id) === Number(id));
+  const artistToUpdate = artists.find(
+    (artist) => Number(artist.id) === Number(id)
+  );
   const body = req.body;
   console.log(body);
   artistToUpdate.name = body.name;
