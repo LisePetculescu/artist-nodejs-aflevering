@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Artist aflevering</title>
+  </head>
+  <body>
+    <header>
+      <h1>Some of the generally more known artists of our time</h1>
+      <h2>hehe</h2>
+      <button id="btn-create-artist" class="buttonAni">New Artist</button>
+    </header>
+    <main>
+      <section>
+        <h2 id="artists">Katalog - Kunstnerer</h2>
+        <table>
+          <tbody id="artist-table-body"></tbody>
+        </table>
+      </section>
+      <dialog id="dialog-create-artist">
+        <form id="form-create">
+          <h2>Create a new artist</h2>
+          <input type="text" name="name" placeholder="Type your name" required />
+          <input type="text" name="birthdate" placeholder="yyyy-mm-dd" required />
+          <input type="text" name="activeSince" placeholder="yyyy" required />
+          <input type="text" name="genres" placeholder="genres" required />
+          <input type="text" name="labels" placeholder="labels" required />
+          <input type="url" name="website" placeholder="www.example.com" />
+          <input type="url" name="image" placeholder="Paste image url" required />
+          <input type="text" name="shortDescription" placeholder="write something here" required />
+          <button>Create Artist</button>
+        </form>
+      </dialog>
+      <dialog id="dialog-update-artist">
+        <form id="form-update">
+          <h2>Update the artist</h2>
+          <input type="text" name="name" placeholder="Type your name" required />
+          <input type="text" name="birthdate" placeholder="yyyy-mm-dd" required />
+          <input type="text" name="activeSince" placeholder="yyyy" required />
+          <input type="text" name="genres" placeholder="genres" required />
+          <input type="text" name="labels" placeholder="labels" required />
+          <input type="url" name="website" placeholder="www.example.com" />
+          <input type="url" name="image" placeholder="Paste image url" required />
+          <input type="text" name="shortDescription" placeholder="write something here" required />
+          <button>Update Artist</button>
+        </form>
+      </dialog>
+    </main>
+    <footer>
+      <h3>"I've done did this webapp" - Lise</h3>
+      <h4>'Emotionally supported by ChatGPT'</h4>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
