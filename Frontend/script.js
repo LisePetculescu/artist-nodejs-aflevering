@@ -207,7 +207,6 @@ async function PutUpdatedArtist(updatedArtist, id) {
   if (response.ok) {
     updateArtistpage();
     showFavoriteArtists();
-    // scrollToTop({ behavior: "smooth" });
   }
 }
 
@@ -223,24 +222,6 @@ async function deleteArtist(id) {
     scrollToTop({ behavior: "smooth" });
   }
 }
-
-// async function favoritArtistChecked(artist) {
-//   // console.log(event);
-//   console.log(artist.id);
-//   const artistID = { id: artist.id };
-//   const artistAsJson = JSON.stringify(artistID);
-//   const response = await fetch(`${endpoint}/artists/${artist.id}`, {
-//     method: "POST",
-//     body: artistAsJson,
-//     headers: { "Content-Type": "application/json" },
-//   });
-
-//   if (response.ok) {
-//     console.log("id sent to favoriteArtists.json file");
-//   } else {
-//     console.error("Something went wrong with sending the id");
-//   }
-// }
 
 async function favoritArtistChecked(event, artist) {
   const artistID = { id: artist.id }; // Create an object with the artist's ID
@@ -271,7 +252,6 @@ async function favoritArtistChecked(event, artist) {
     if (response.ok) {
       // updateArtistpage();
       showFavoriteArtists();
-      // scrollToTop({ behavior: "smooth" });
     }
   }
 }

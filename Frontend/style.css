@@ -59,6 +59,37 @@ footer {
   padding: 10px;
 }
 
+/* .fav-container {
+  background-color: #111111;
+} */
+
+hr {
+  border: 0.5vw solid #111111;
+  border-radius: 5px;
+}
+
+/* scrollbar style source https://www.w3schools.com/howto/howto_css_custom_scrollbar.asp */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #a5a5a5;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #2b2a2a;
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #4e4e4e;
+}
+
 .grid-item {
   color: rgb(212, 143, 14);
   background-color: #292727;
@@ -68,8 +99,6 @@ footer {
 
 .fav-item {
   padding: 0.8vw;
-  /* filter: drop-shadow(3px 2px 4px #111111); */
-  /* border: 0.4vw solid ; */
 }
 
 img {
