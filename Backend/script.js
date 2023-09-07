@@ -8,7 +8,7 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-async function getArtists() {
+async function readArtists() {
   const artistList = await fs.readFile("artistData.json");
   return JSON.parse(artistList);
 }
@@ -22,13 +22,13 @@ app.get("/", (req, res) => {
 });
 
 app.get("/artists", async (req, res) => {
-  const artists = await getArtists();
-  getArtists(artists);
+  const artists = await readArtists();
+  readArtists(artists);
   res.json(artists);
 });
 
 app.get("/artists/:id", async (req, res) => {
-  const artists = await getArtists();
+  const artists = await readArtists();
   console.log(req.params);
 
   const id = Number(req.params.id);
@@ -55,7 +55,7 @@ app.post("/artists", async (req, res) => {
   newArtist.id = new Date().getTime();
   console.log(newArtist);
 
-  const artists = await getArtists();
+  const artists = await readArtists();
   artists.push(newArtist);
   const json = JSON.stringify(artists);
   await fs.writeFile("artistData.json", json);
@@ -88,7 +88,7 @@ app.put("/artists/:id", async (req, res) => {
   const id = req.params.id;
   console.log(id);
 
-  const artists = await getArtists();
+  const artists = await readArtists();
 
   const artistToUpdate = artists.find((artist) => Number(artist.id) === Number(id));
   const body = req.body;
@@ -109,7 +109,7 @@ app.put("/artists/:id", async (req, res) => {
 app.delete("/artists/:id", async (req, res) => {
   const id = Number(req.params.id);
 
-  const artists = await getArtists();
+  const artists = await readArtists();
 
   const NewArtistList = artists.filter((artist) => artist.id !== id);
   fs.writeFile("artistData.json", JSON.stringify(NewArtistList));

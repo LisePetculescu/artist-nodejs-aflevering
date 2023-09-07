@@ -26,42 +26,90 @@
           <option value="name">Name</option>
           <option value="age">Age</option>
         </select>
-        <label for="filterAll" class="sortFilter">Filter By Genre:</label>
-        <select id="filterAll" class="sortFilter" autocomplete="off">
-          <option value="default"></option>
-          <option value="pop">Pop</option>
-          <option value="rock">Rock</option>
-          <option value="rnb">R&B</option>
+
+        <label for="genreFilter" class="sortFilter">Filter by Genre:</label>
+        <select id="genreFilter" class="sortFilter">
+          <option value="All">All Genres</option>
+          <option value="Pop">Pop</option>
+          <option value="Hip-Hop">Hip-Hop</option>
+          <option value="Rap">Rap</option>
+          <option value="Soul">Soul</option>
+          <option value="R&B">R&B</option>
+          <option value="Rock">Rock</option>
+          <option value="Country">Country</option>
+          <option value="Folk">Folk</option>
         </select>
 
         <section id="artist-section" class="grid-container"></section>
       </section>
 
       <dialog id="dialog-create-artist">
+        <button id="close-create">Close</button>
         <form id="form-create">
           <h2>Create a new artist</h2>
-          <input type="text" name="name" placeholder="Type their name" required />
-          <input type="text" name="birthdate" placeholder="yyyy-mm-dd" required />
+          <input
+            type="text"
+            name="name"
+            placeholder="Type their name"
+            required
+          />
+          <input
+            type="text"
+            name="birthdate"
+            placeholder="yyyy-mm-dd"
+            required
+          />
           <input type="text" name="activeSince" placeholder="yyyy" required />
           <input type="text" name="genres" placeholder="Genres" required />
           <input type="text" name="labels" placeholder="Labels" required />
           <input type="url" name="website" placeholder="Website url" />
-          <input type="url" name="image" placeholder="Paste image url" required />
-          <input type="text" name="shortDescription" placeholder="Write a description" required />
+          <input
+            type="url"
+            name="image"
+            placeholder="Paste image url"
+            required
+          />
+          <input
+            type="text"
+            name="shortDescription"
+            placeholder="Write a description"
+            required
+          />
           <button>Create Artist</button>
         </form>
       </dialog>
       <dialog id="dialog-update-artist">
+        <button id="close-update">Close</button>
         <form id="form-update">
           <h2>Update the artist</h2>
-          <input type="text" name="name" placeholder="Type their name" required />
-          <input type="text" name="birthdate" placeholder="yyyy-mm-dd" required />
+          <input
+            type="text"
+            name="name"
+            placeholder="Type their name"
+            required
+          />
+          <input
+            type="text"
+            name="birthdate"
+            placeholder="yyyy-mm-dd"
+            required
+          />
           <input type="text" name="activeSince" placeholder="yyyy" required />
           <input type="text" name="genres" placeholder="Genres" required />
           <input type="text" name="labels" placeholder="Labels" required />
           <input type="url" name="website" placeholder="Website url" />
-          <input type="url" name="image" placeholder="Paste image url" required />
-          <input type="text" name="shortDescription" placeholder="Write a description" required />
+          <input
+            type="url"
+            name="image"
+            placeholder="Paste image url"
+            required
+          />
+          <input
+            type="text"
+            name="shortDescription"
+            placeholder="Write a description"
+            required
+          />
           <button>Update Artist</button>
         </form>
       </dialog>
@@ -71,6 +119,8 @@
       <h3>"I've done did this webapp" - Lise</h3>
       <h4>'Emotionally supported by ChatGPT'</h4>
     </footer>
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script> -->
+    <script type="module" src="script.js"></script>
+    <script type="module" src="dataFetch.js"></script>
   </body>
 </html>

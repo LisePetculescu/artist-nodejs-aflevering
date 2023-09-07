@@ -1,5 +1,7 @@
 # artist-nodejs-aflevering
 
+0. Be sure to have downloaded node.js on your computer
+
 1. Open this repository in VScode
 
 2. Open the frontend folder in a new VScode window
