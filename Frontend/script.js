@@ -8,18 +8,10 @@ let selectedArtist;
 function start() {
   console.log("we have connection to js 👌🙌");
 
-  document
-    .querySelector("#btn-create-artist")
-    .addEventListener("click", () =>
-      document.querySelector("#dialog-create-artist").showModal()
-    );
+  document.querySelector("#btn-create-artist").addEventListener("click", () => document.querySelector("#dialog-create-artist").showModal());
 
-  document
-    .querySelector("#form-create")
-    .addEventListener("submit", createArtist);
-  document
-    .querySelector("#form-update")
-    .addEventListener("submit", submitUpdatedArtist);
+  document.querySelector("#form-create").addEventListener("submit", createArtist);
+  document.querySelector("#form-update").addEventListener("submit", submitUpdatedArtist);
 
   updateArtistpage();
   console.log("START FUNC");
@@ -67,9 +59,7 @@ function showArtist(artist) {
       <p>Genre: ${artist.genres}</p>
     </article>
   `;
-  document
-    .querySelector(".grid-container")
-    .insertAdjacentHTML("beforeend", html);
+  document.querySelector(".grid-container").insertAdjacentHTML("beforeend", html);
 
   // document
   //   .querySelector(".grid-container article:last-child .btn-update-artist")
@@ -78,9 +68,7 @@ function showArtist(artist) {
   //   .querySelector(".grid-container article:last-child .btn-delete-artist")
   //   .addEventListener("click", () => deleteArtist(artist.id));
 
-  document
-    .querySelector(".grid-container article:last-child")
-    .addEventListener("click", () => showArtistModal(artist));
+  document.querySelector(".grid-container article:last-child").addEventListener("click", () => showArtistModal(artist));
 }
 
 function showArtistModal(artist) {
@@ -111,15 +99,9 @@ function showArtistModal(artist) {
 
   document.querySelector("#show-artist-modal").showModal();
 
-  document
-    .querySelector(".btn-update-artist")
-    .addEventListener("click", () => selectedToUpdate(artist));
-  document
-    .querySelector(".btn-delete-artist")
-    .addEventListener("click", () => deleteArtist(artist.id));
-  document
-    .querySelector("#favoriteArtist")
-    .addEventListener("change", () => favoritArtistChecked(artist));
+  document.querySelector(".btn-update-artist").addEventListener("click", () => selectedToUpdate(artist));
+  document.querySelector(".btn-delete-artist").addEventListener("click", () => deleteArtist(artist.id));
+  document.querySelector("#favoriteArtist").addEventListener("change", () => favoritArtistChecked(artist));
 }
 
 async function createArtist(event) {
@@ -134,7 +116,7 @@ async function createArtist(event) {
     labels: form.labels.value,
     website: form.website.value,
     image: form.image.value,
-    shortDescription: form.shortDescription.value,
+    shortDescription: form.shortDescription.value
   };
 
   // JSONify the new artist
@@ -142,7 +124,7 @@ async function createArtist(event) {
   const response = await fetch(`${endpoint}/artists`, {
     method: "POST",
     body: artistAsJson,
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" }
   });
 
   if (response.ok) {
@@ -186,7 +168,7 @@ async function submitUpdatedArtist(event) {
     labels: form.labels.value,
     website: form.website.value,
     image: form.image.value,
-    shortDescription: form.shortDescription.value,
+    shortDescription: form.shortDescription.value
   };
 
   // JSONify the updated artist
@@ -194,7 +176,7 @@ async function submitUpdatedArtist(event) {
   const response = await fetch(`${endpoint}/artists/${selectedArtist.id}`, {
     method: "PUT",
     body: artistAsJson,
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" }
   });
   if (response.ok) {
     updateArtistpage();
@@ -205,7 +187,7 @@ async function submitUpdatedArtist(event) {
 async function deleteArtist(id) {
   console.log(id);
   const response = await fetch(`${endpoint}/artists/${id}`, {
-    method: "DELETE",
+    method: "DELETE"
   });
 
   if (response.ok) {
@@ -240,7 +222,7 @@ async function favoritArtistChecked(artist) {
   const response = await fetch(`${endpoint}/favoriteArtists`, {
     method: "POST",
     body: artistAsJson,
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" }
   });
 
   if (response.ok) {
@@ -270,9 +252,7 @@ async function findFavoriteArtists() {
     noFavs.innerHTML = /* html */ `<p>No Favorite Artist Found</p>`;
   }
 
-  const matchedArtists = allArtists.filter((artist) =>
-    favArtistIds.includes(String(artist.id))
-  );
+  const matchedArtists = allArtists.filter((artist) => favArtistIds.includes(String(artist.id)));
 
   console.log(matchedArtists);
   return matchedArtists;
@@ -304,11 +284,7 @@ function showFavArtist(favArtist) {
       <p>Genre: ${favArtist.genres}</p>
     </article>
   `;
-  document
-    .querySelector("#favoriteArtistList")
-    .insertAdjacentHTML("beforeend", html);
+  document.querySelector("#favoriteArtistList").insertAdjacentHTML("beforeend", html);
 
-  document
-    .querySelector("#favoriteArtistList article:last-child")
-    .addEventListener("click", () => showArtistModal(artist));
+  document.querySelector("#favoriteArtistList article:last-child").addEventListener("click", () => showArtistModal(artist));
 }
