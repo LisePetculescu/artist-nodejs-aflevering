@@ -90,9 +90,7 @@ app.put("/artists/:id", async (req, res) => {
 
   const artists = await readArtists();
 
-  const artistToUpdate = artists.find(
-    (artist) => Number(artist.id) === Number(id)
-  );
+  const artistToUpdate = artists.find((artist) => Number(artist.id) === Number(id));
   const body = req.body;
   console.log(body);
   artistToUpdate.name = body.name;

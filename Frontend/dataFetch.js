@@ -12,7 +12,7 @@ async function createArtist(newArtist) {
   const response = await fetch(`${endpoint}/artists`, {
     method: "POST",
     body: JSON.stringify(newArtist),
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" }
   });
   if (response.ok) {
     return true;
@@ -26,7 +26,7 @@ async function putUpdatedArtist(updatedArtist, id) {
   const response = await fetch(`${endpoint}/artists/${id}`, {
     method: "PUT",
     body: artistAsJson,
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" }
   });
   if (response.ok) {
     return true;
@@ -36,7 +36,7 @@ async function putUpdatedArtist(updatedArtist, id) {
 async function deleteArtist(id) {
   console.log(id);
   const response = await fetch(`${endpoint}/artists/${id}`, {
-    method: "DELETE",
+    method: "DELETE"
   });
 
   if (response.ok) {
@@ -52,10 +52,4 @@ async function getFavoriteArtists() {
 }
 
 // Export the functions
-export {
-  getArtists,
-  createArtist,
-  putUpdatedArtist,
-  deleteArtist,
-  getFavoriteArtists,
-};
+export { getArtists, createArtist, putUpdatedArtist, deleteArtist, getFavoriteArtists };
