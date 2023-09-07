@@ -3,7 +3,7 @@
 import {
   getArtists,
   createArtist,
-  PutUpdatedArtist,
+  putUpdatedArtist,
   deleteArtist,
   getFavoriteArtists,
 } from "./dataFetch.js";
@@ -218,9 +218,9 @@ async function submitUpdatedArtist(event) {
     shortDescription: form.shortDescription.value,
   };
 
-  // PutUpdatedArtist(updatedArtist, selectedArtist.id);
+  putUpdatedArtist(updatedArtist, selectedArtist.id);
 
-  const success = await PutUpdatedArtist(updatedArtist, selectedArtist.id);
+  const success = await putUpdatedArtist(updatedArtist, selectedArtist.id);
 
   if (success) {
     document.querySelector("#dialog-update-artist").close();

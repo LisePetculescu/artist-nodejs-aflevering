@@ -20,7 +20,7 @@ async function createArtist(newArtist) {
   return false;
 }
 
-async function PutUpdatedArtist(updatedArtist, id) {
+async function putUpdatedArtist(updatedArtist, id) {
   // JSONify the updated artist
   const artistAsJson = JSON.stringify(updatedArtist);
   const response = await fetch(`${endpoint}/artists/${id}`, {
@@ -55,7 +55,7 @@ async function getFavoriteArtists() {
 export {
   getArtists,
   createArtist,
-  PutUpdatedArtist,
+  putUpdatedArtist,
   deleteArtist,
   getFavoriteArtists,
 };
