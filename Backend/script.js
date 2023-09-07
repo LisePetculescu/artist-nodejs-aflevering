@@ -83,48 +83,6 @@ app.post("/favoriteArtists", async (req, res) => {
   res.json(artists);
 });
 
-// app.post("/artists/:id", async (req, res) => {
-//   const newFavArtist = req.params.id;
-//   newFavArtist.id = new Date().getTime();
-//   // const artId = req.params.id;
-//   const artistID = { id: artId }; // Create an object with only the 'id' field
-
-//   const favArtistList = await fs.readFile("favoritArtists.json");
-//   const artists = JSON.parse(favArtistList);
-//   artists.push(artistID); // Push the 'id' object into the array
-//   const json = JSON.stringify(artists);
-//   await fs.writeFile("favoritArtists.json", json);
-//   res.json(artists);
-// });
-
-// app.post("/artists/:id", async (req, res) => {
-//   console.log(req.body);
-//   const newArtist = req.body;
-//   // newArtist.id = new Date().getTime();
-//   console.log(newArtist);
-
-//   // const artists = await getArtists();
-//   const favArtistList = await fs.readFile("favoritArtists.json");
-//   const artists = JSON.parse(favArtistList);
-//   artists.push(newArtist);
-//   const json = JSON.stringify(artists);
-//   await fs.writeFile("favoritArtists.json", json);
-//   res.json(artists);
-// });
-
-// app.post("/favArtists", async (req, res) => {
-//   console.log(req.body);
-//   const favArtist = req.body;
-//   console.log(favArtist);
-
-//   const favArtistList = await fs.readFile("favoritArtists.json");
-//   const artists = JSON.parse(favArtistList);
-//   artists.push(favArtist);
-//   const json = JSON.stringify(artists);
-//   await fs.writeFile("favoritArtists.json", json);
-//   res.json(artists);
-// });
-
 app.put("/artists/:id", async (req, res) => {
   console.log("vi putter");
   const id = req.params.id;
@@ -155,6 +113,19 @@ app.delete("/artists/:id", async (req, res) => {
 
   const NewArtistList = artists.filter((artist) => artist.id !== id);
   fs.writeFile("artistData.json", JSON.stringify(NewArtistList));
+
+  res.json(artists);
+});
+
+app.delete("/favoriteArtists/:id", async (req, res) => {
+  const id = req.params.id;
+
+  // const artists = await getArtists();
+  const favArtistList = await fs.readFile("favoritArtists.json");
+  let artists = JSON.parse(favArtistList);
+
+  const NewFavArtistList = artists.filter((artistID) => artistID !== id);
+  fs.writeFile("favoritArtists.json", JSON.stringify(NewFavArtistList));
 
   res.json(artists);
 });

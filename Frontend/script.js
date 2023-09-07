@@ -3,7 +3,7 @@
 window.addEventListener("load", start);
 const endpoint = "http://localhost:3000";
 let selectedArtist;
-// let artistData;
+let artists;
 
 function start() {
   console.log("we have connection to js 👌🙌");
@@ -16,7 +16,10 @@ function start() {
   updateArtistpage();
   console.log("START FUNC");
 
-  // document.querySelector("#sort").addEventListener("change", sortByX);
+  // document.querySelector("#sortAll").addEventListener("change", showArtistsAll);
+  document.querySelector("#sortAll").addEventListener("change", (event) => sortAllByX(event));
+  // document.querySelector("#sortAll").addEventListener("change", (event) => sortAllByX(event));
+
   // document.querySelector("#favoriteArtist").addEventListener("change", favoritArtistChecked)
 
   // getFavoriteArtists();
@@ -25,7 +28,7 @@ function start() {
 }
 
 async function updateArtistpage() {
-  const artists = await getArtistsFromBackend();
+  artists = await getArtistsFromBackend();
   showArtistsAll(artists);
 }
 
@@ -41,7 +44,10 @@ function showArtistsAll(array) {
   // document.querySelector("#artist-table-body").innerHTML = "";
   document.querySelector(".grid-container").innerHTML = "";
 
+  // sortAllByX();
+
   for (const artist of array) {
+    // sortAllByX();
     showArtist(artist);
   }
 }
@@ -68,11 +74,16 @@ function showArtist(artist) {
   //   .querySelector(".grid-container article:last-child .btn-delete-artist")
   //   .addEventListener("click", () => deleteArtist(artist.id));
 
-  document.querySelector(".grid-container article:last-child").addEventListener("click", () => showArtistModal(artist));
+  document.querySelector(".grid-container article:last-child").addEventListener("click", (event) => showArtistModal(event, artist));
 }
 
-function showArtistModal(artist) {
+async function showArtistModal(event, artist) {
   console.log(artist);
+  console.log(event);
+
+  const isFav = await isFavorite(artist.id);
+  console.log(isFav);
+
   const html = /* html */ `
     <article class="grid-item">
     <button class="btn-update-artist">Update</button>
@@ -81,7 +92,7 @@ function showArtistModal(artist) {
           type="checkbox"
           id="favoriteArtist"
           name="favoriteArtist"
-          value="true"
+          ${isFav ? "checked" : ""}
         />
         <label for="favoriteArtist">Favorite</label><br />
     </br>
@@ -101,7 +112,17 @@ function showArtistModal(artist) {
 
   document.querySelector(".btn-update-artist").addEventListener("click", () => selectedToUpdate(artist));
   document.querySelector(".btn-delete-artist").addEventListener("click", () => deleteArtist(artist.id));
-  document.querySelector("#favoriteArtist").addEventListener("change", () => favoritArtistChecked(artist));
+  document.querySelector("#favoriteArtist").addEventListener("change", (event) => favoritArtistChecked(event, artist));
+}
+
+async function isFavorite(id) {
+  const favArtistIds = await getFavoriteArtists();
+
+  if (favArtistIds.includes(String(id))) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 async function createArtist(event) {
@@ -132,7 +153,7 @@ async function createArtist(event) {
     updateArtistpage();
     // and scroll to top
     // scrollToTop();
-    scrollIntoView({ behavior: "smooth" });
+    // scrollIntoView({ behavior: "smooth" });
   } else {
     console.error("Something went wrong with posting a new artist Lise");
   }
@@ -141,6 +162,7 @@ async function createArtist(event) {
 function selectedToUpdate(artist) {
   selectedArtist = artist;
   console.log("my selected artist  ", selectedArtist);
+  console.log(artist.id);
 
   const form = document.querySelector("#form-update");
   form.name.value = artist.name;
@@ -171,16 +193,21 @@ async function submitUpdatedArtist(event) {
     shortDescription: form.shortDescription.value
   };
 
+  PutUpdatedArtist(updatedArtist, selectedArtist.id);
+}
+
+async function PutUpdatedArtist(updatedArtist, id) {
   // JSONify the updated artist
   const artistAsJson = JSON.stringify(updatedArtist);
-  const response = await fetch(`${endpoint}/artists/${selectedArtist.id}`, {
+  const response = await fetch(`${endpoint}/artists/${id}`, {
     method: "PUT",
     body: artistAsJson,
     headers: { "Content-Type": "application/json" }
   });
   if (response.ok) {
     updateArtistpage();
-    scrollToTop({ behavior: "smooth" });
+    showFavoriteArtists();
+    // scrollToTop({ behavior: "smooth" });
   }
 }
 
@@ -192,6 +219,7 @@ async function deleteArtist(id) {
 
   if (response.ok) {
     updateArtistpage();
+    showFavoriteArtists();
     scrollToTop({ behavior: "smooth" });
   }
 }
@@ -214,21 +242,37 @@ async function deleteArtist(id) {
 //   }
 // }
 
-async function favoritArtistChecked(artist) {
+async function favoritArtistChecked(event, artist) {
   const artistID = { id: artist.id }; // Create an object with the artist's ID
   console.log("artisk id Front", artistID);
   const artistAsJson = JSON.stringify(artistID);
 
-  const response = await fetch(`${endpoint}/favoriteArtists`, {
-    method: "POST",
-    body: artistAsJson,
-    headers: { "Content-Type": "application/json" }
-  });
+  console.log("sldkjfsalkjnfhlksjhfvlk", event.target.checked);
+  const isChecked = event.target.checked;
 
-  if (response.ok) {
-    console.log("ID sent to favoriteArtists.json file");
+  if (isChecked) {
+    const response = await fetch(`${endpoint}/favoriteArtists`, {
+      method: "POST",
+      body: artistAsJson,
+      headers: { "Content-Type": "application/json" }
+    });
+
+    if (response.ok) {
+      console.log("ID sent to favoriteArtists.json file");
+      // updateArtistpage();
+      showFavoriteArtists();
+    } else {
+      console.error("Something went wrong with sending the ID");
+    }
   } else {
-    console.error("Something went wrong with sending the ID");
+    const response = await fetch(`${endpoint}/favoriteArtists/${artist.id}`, {
+      method: "DELETE"
+    });
+    if (response.ok) {
+      // updateArtistpage();
+      showFavoriteArtists();
+      // scrollToTop({ behavior: "smooth" });
+    }
   }
 }
 
@@ -286,5 +330,33 @@ function showFavArtist(favArtist) {
   `;
   document.querySelector("#favoriteArtistList").insertAdjacentHTML("beforeend", html);
 
-  document.querySelector("#favoriteArtistList article:last-child").addEventListener("click", () => showArtistModal(artist));
+  document.querySelector("#favoriteArtistList article:last-child").addEventListener("click", (event) => showArtistModal(event, favArtist));
+}
+
+// function sortAllByX(event) {
+//   console.log(event);
+//   console.log(this.value);
+//   const sortValue = this.value;
+
+//   if (sortValue === "name") {
+//     return artist.sort((nameA, nameB) => nameA.localeCompare(nameB));
+//   }
+// }
+
+function sortAllByX(event) {
+  const sortValue = event.target.value;
+  console.log(event);
+  // console.log(artists);
+
+  if (sortValue === "name") {
+    const sortedArtists = artists.slice().sort((a, b) => a.name.localeCompare(b.name));
+    showArtistsAll(sortedArtists);
+  } else if (sortValue === "age") {
+    const sortedArtistsByAge = artists.slice().sort((a, b) => new Date(a.birthdate).getTime() - new Date(b.birthdate).getTime());
+    {
+      showArtistsAll(sortedArtistsByAge);
+    }
+  } else {
+    updateArtistpage();
+  }
 }

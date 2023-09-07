@@ -66,6 +66,12 @@ footer {
   /* border-radius: 20px; */
 }
 
+.fav-item {
+  padding: 0.8vw;
+  /* filter: drop-shadow(3px 2px 4px #111111); */
+  /* border: 0.4vw solid ; */
+}
+
 img {
   object-fit: cover;
   width: 20vw;
@@ -93,7 +99,8 @@ input {
 }
 
 #catalogue,
-#favArtistHeader {
+#favArtistHeader,
+.sortFilter {
   position: relative;
   left: 2vw;
 }

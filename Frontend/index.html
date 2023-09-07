@@ -9,14 +9,7 @@
   <body>
     <header>
       <h1>Some of the Generally More Known Artists of Our Time</h1>
-      <h2>hehe</h2>
       <button id="btn-create-artist" class="buttonAni">New Artist</button>
-      <label for="sort">Sort By:</label>
-      <select id="sort" autocomplete="off">
-        <option value="default"></option>
-        <option value="name">Name</option>
-        <option value="age">Age</option>
-      </select>
     </header>
 
     <main>
@@ -27,74 +20,48 @@
       <hr />
       <section>
         <h2 id="catalogue">Catalogue - Artists</h2>
+        <label for="sortAll" class="sortFilter">Sort By:</label>
+        <select id="sortAll" class="sortFilter" autocomplete="off">
+          <option value="default"></option>
+          <option value="name">Name</option>
+          <option value="age">Age</option>
+        </select>
+        <label for="filterAll" class="sortFilter">Filter By Genre:</label>
+        <select id="filterAll" class="sortFilter" autocomplete="off">
+          <option value="default"></option>
+          <option value="pop">Pop</option>
+          <option value="rock">Rock</option>
+          <option value="rnb">R&B</option>
+        </select>
+
         <section id="artist-section" class="grid-container"></section>
       </section>
 
       <dialog id="dialog-create-artist">
         <form id="form-create">
           <h2>Create a new artist</h2>
-          <input
-            type="text"
-            name="name"
-            placeholder="Type their name"
-            required
-          />
-          <input
-            type="text"
-            name="birthdate"
-            placeholder="yyyy-mm-dd"
-            required
-          />
+          <input type="text" name="name" placeholder="Type their name" required />
+          <input type="text" name="birthdate" placeholder="yyyy-mm-dd" required />
           <input type="text" name="activeSince" placeholder="yyyy" required />
           <input type="text" name="genres" placeholder="Genres" required />
           <input type="text" name="labels" placeholder="Labels" required />
           <input type="url" name="website" placeholder="Website url" />
-          <input
-            type="url"
-            name="image"
-            placeholder="Paste image url"
-            required
-          />
-          <input
-            type="text"
-            name="shortDescription"
-            placeholder="Write a description"
-            required
-          />
+          <input type="url" name="image" placeholder="Paste image url" required />
+          <input type="text" name="shortDescription" placeholder="Write a description" required />
           <button>Create Artist</button>
         </form>
       </dialog>
       <dialog id="dialog-update-artist">
         <form id="form-update">
           <h2>Update the artist</h2>
-          <input
-            type="text"
-            name="name"
-            placeholder="Type their name"
-            required
-          />
-          <input
-            type="text"
-            name="birthdate"
-            placeholder="yyyy-mm-dd"
-            required
-          />
+          <input type="text" name="name" placeholder="Type their name" required />
+          <input type="text" name="birthdate" placeholder="yyyy-mm-dd" required />
           <input type="text" name="activeSince" placeholder="yyyy" required />
           <input type="text" name="genres" placeholder="Genres" required />
           <input type="text" name="labels" placeholder="Labels" required />
           <input type="url" name="website" placeholder="Website url" />
-          <input
-            type="url"
-            name="image"
-            placeholder="Paste image url"
-            required
-          />
-          <input
-            type="text"
-            name="shortDescription"
-            placeholder="Write a description"
-            required
-          />
+          <input type="url" name="image" placeholder="Paste image url" required />
+          <input type="text" name="shortDescription" placeholder="Write a description" required />
           <button>Update Artist</button>
         </form>
       </dialog>

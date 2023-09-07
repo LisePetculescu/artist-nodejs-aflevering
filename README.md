@@ -1,2 +1,11 @@
 # artist-nodejs-aflevering
- 
+
+1. Open this repository in VScode
+2. Open the terminal --> make sure you're in the backend folder of this project in the terminal
+3. Write 'npm install' --> press enter
+4. Write 'npm start' --> press enter
+5. Check the terminal log says 'noget sjovt skete... server kører på http://localhost:3000'
+6. Open the frontend folder in a new VScode window
+   6a. go to the frontend folder in the terminal and write 'code .' --> this should open it in a new VScode window
+7. Press 'Go Live' with the frontend window
+8. Enjoy my website
